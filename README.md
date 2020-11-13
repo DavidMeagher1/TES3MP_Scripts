@@ -2,6 +2,8 @@
  a customizeable party system for tes3mp
  This requires Two other modules. To install this module just go to your `server/scripts/custom` folder and clone this repo.
 
+ Then add `PartySystem = require("custom.PartySystem.main")` to your customScripts.lua after [Urm's DataManager](https://github.com/tes3mp-scripts/DataManager)
+
 # Important!
 before you use the party system, it changes how journal updates and topic updates work and will give you some strange erros if your config.lua has `shareJournal` and `shareTopics` set to true.
 
