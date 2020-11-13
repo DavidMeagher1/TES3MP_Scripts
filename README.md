@@ -4,8 +4,8 @@
  A customizeable party system for tes3mp. Activate a user to invite them to a party, or if you've been invited activate a user of that party to accept (commands coming). Share journal and topic updates with only the people in your party, parties are saved so you can jump back in and be in the same party.
  
 # Install
- This requires Two other modules. To install this module add these files to a `server/scripts/custom/PartySystem` folder.
- If you're looking for a specific release look in the [releases section](../../releases)
+ This requires Two other modules. To install this module add these files to a `server/scripts/custom/PartySystem` folder.  
+ If you're looking for a specific release look in the [releases section](../../releases)  
  Then add `PartySystem = require("custom.PartySystem.main")` to your **customScripts.lua** after [Urm's DataManager](https://github.com/tes3mp-scripts/DataManager)
  
  ### Config
