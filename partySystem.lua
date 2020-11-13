@@ -371,7 +371,7 @@ end
 
 local GetChatName = logicHandler.GetChatName
 logicHandler.GetChatName = function(pid)
-    if Players[pid] ~= nil then
+    if Players[pid] ~= nil  and PartySystem.config.showPartyNameInChat and PartySystem.config.allowNamedParties then
         local partyId = PartySystem.getPartyId(pid)
         if partyId ~= nil then
             return color.Gray .. "-" .. PartySystem.data.parties[partyId].name .. "- " .. color.Default .. GetChatName(pid)
