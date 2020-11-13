@@ -1,4 +1,6 @@
 # PartySystem
+  Made by [DavidMeagher1](https://github.com/DavidMeagher1) and [LeonardMeagher2](https://github.com/LeonardMeagher2)
+  
  a customizeable party system for tes3mp
  This requires Two other modules. To install this module just go to your `server/scripts/custom` folder and clone this repo.
 
