@@ -1,6 +1,14 @@
 # PartySystem
  a customizeable party system for tes3mp
  This requires Two other modules. To install this module just go to your `server/scripts/custom` folder and clone this repo.
+
+# Important!
+before you use the party system, it changes how journal updates and topic updates work and will give you some strange erros if your config.lua has `shareJournal` and `shareTopics` set to true.
+
+This might be because the sharing makes players look at the *World Journal* and this will get fixed eventually to not be so introusive.
+
+ We recommend turning all sharing features off for the best expieriance though those are the two that must be.
+
 # PlayerActivateApi
  [PlayerActivateApi](https://github.com/DavidMeagher1/TES3MP_SingleScripts/blob/main/playerActivateAPI.lua) introduces an "OnPlayerActivate" event that allows you to know when one player has "activated" another and has a simple option to show a menu of your choosing
 
