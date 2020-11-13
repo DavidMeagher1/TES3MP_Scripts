@@ -5,6 +5,7 @@
  
 # Install
  This requires Two other modules. To install this module add these files to a `server/scripts/custom/PartySystem` folder.
+ If you're looking for a specific release look in the [releases section](../../releases)
  Then add `PartySystem = require("custom.PartySystem.main")` to your **customScripts.lua** after [Urm's DataManager](https://github.com/tes3mp-scripts/DataManager)
  
  ### Config
