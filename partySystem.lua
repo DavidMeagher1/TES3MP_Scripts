@@ -1,5 +1,5 @@
 -- basic setup
-PlayerActivationApi = require("custom.playerActivateAPI")
+--PlayerActivationApi = require("custom.playerActivateAPI")
 
 PartySystem = {}
 PartySystem.scriptName = "PartySystem"
@@ -344,7 +344,7 @@ function PartySystem.onPlayerActivateHandler(eventStatus, me, them, cellDescript
 end
 
 function PartySystem.OnServerPostInitHandler()
-    table.insert(PlayerActivationApi.menu.buttons, 1, partyButton)
+    table.insert(PlayerActivateApi.menu.buttons, 1, partyButton)
     PartySystem.loadData()
     PartySystem.saveData()
 end
