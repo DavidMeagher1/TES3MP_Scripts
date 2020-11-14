@@ -66,7 +66,7 @@ function PartySystem.setupParty(leaderpid, pid)
         name = nil
     }
     if PartySystem.config.allowNamedParties then
-        quickLog("PID BEING USED BY INPUT DIALOG: " .. tostring(leaderpid))
+        --quickLog("PID BEING USED BY INPUT DIALOG: " .. tostring(leaderpid))
         tes3mp.InputDialog(leaderpid, PartySystem.config.partyNameMenuId, "Name your party", Players[leaderpid].name .. "'s party.'")
     else
         PartySystem.createParty(leaderpid)
