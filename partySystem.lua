@@ -1,7 +1,7 @@
 -- basic setup
-PlayerActivationApi = require("custom.playerActivateAPI")
+local PlayerActivationApi = require("custom.playerActivateAPI")
 
-PartySystem = {}
+local PartySystem = {}
 PartySystem.scriptName = "PartySystem"
 PartySystem.defaultConfig = require("custom.PartySystem.defaultConfig")
 
