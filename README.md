@@ -6,7 +6,7 @@ A customizeable party system for tes3mp. Activate a user to invite them to a par
 Checkout the [ReadMe](https://github.com/DavidMeagher1/PartySystem/blob/main/README.md) of the PartySystem Module for a more detailed explination
 
 ## playerActivationAPI
-`PlayerActivationAPI = require("custom.PlayerActivationAPI")`
+`PlayerActivationAPI = require("custom.PlayerActivationAPI")`  
 Adds an event when you activate a player called `OnPlayerActivate(pid, otherpid, menu, cellDescription)`  
 | argument        | description                                           |
 | --------------- | ----------------------------------------------------- |
