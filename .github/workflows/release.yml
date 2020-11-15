@@ -16,6 +16,7 @@ jobs:
           release_branches: main
           github_token: ${{ secrets.GITHUB_TOKEN }}
       - name: Create a GitHub release
+        if: ${{ steps.tag_version.outputs.new_tag }}
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
