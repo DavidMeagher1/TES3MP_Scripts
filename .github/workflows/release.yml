@@ -7,15 +7,29 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Bump version and push tag
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+      
+      - name: Version
         id: tag_version
         uses: mathieudutour/github-tag-action@v5
         with:
           default_bump: false
           release_branches: main
           github_token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Create a GitHub release
+
+      - name: Zip
+        if: ${{ steps.tag_version.outputs.new_tag }}
+        uses: TheDoctor0/zip-release@0.4.1
+        with:
+          filename:  release-${{ steps.tag_version.outputs.new_tag }}.zip
+          exclusions: '*.git*'
+
+      - name: Release
+        if: ${{ steps.tag_version.outputs.new_tag }}
+        id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -23,3 +37,15 @@ jobs:
           tag_name: ${{ steps.tag_version.outputs.new_tag }}
           release_name: Release ${{ steps.tag_version.outputs.new_tag }}
           body: ${{ steps.tag_version.outputs.changelog }}
+
+      - name: Upload Artifact
+        if: ${{ steps.tag_version.outputs.new_tag }}
+        id: upload-release-asset 
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./release-${{ steps.tag_version.outputs.new_tag }}.zip
+          asset_name: release-${{ steps.tag_version.outputs.new_tag }}.zip
+          asset_content_type: application/zip

@@ -12,8 +12,7 @@ Adds an event when you activate a player called `OnPlayerActivate(pid, otherpid,
 ]] --
 
 
-PlayerActivationApi = {}
-PlayerActivationApi.config = {}
+PlayerActivationAPI = {}
 
 -- this function checks to see if this is a player activating another player and calls the validator and handler for "OnPlayerActivate"
 local function ObjectToPlayerHandler(eventStatus, pid, cellDescription, objects, players)
@@ -49,17 +48,19 @@ local function ObjectToPlayerHandler(eventStatus, pid, cellDescription, objects,
         end
     end
 end
--- register that function to be called when the player activates an object
-customEventHooks.registerHandler("OnObjectActivate", ObjectToPlayerHandler)
 
 -- this validator just makes sure everyone is logged in
-function PlayerActivationApi.OnPlayerActivateValidator(eventStatus, activatingPlayer, activatedPlayer, cellDescription)
+function PlayerActivationAPI.OnPlayerActivateValidator(eventStatus, activatingPlayer, activatedPlayer, cellDescription)
     if (Players[activatingPlayer] == nil or Players[activatedPlayer] == nil or Players[activatingPlayer]:IsLoggedIn() ==
         false or Players[activatedPlayer]:IsLoggedIn() == false or LoadedCells[cellDescription] == nil) then
         return customEventHooks.makeEventStatus(false, false)
     end
 end
 
-customEventHooks.registerValidator("OnPlayerActivate", PlayerActivationApi.OnPlayerActivateValidator)
+-- register that function to be called when the player activates an object
+customEventHooks.registerHandler("OnObjectActivate", ObjectToPlayerHandler)
+customEventHooks.registerValidator("OnPlayerActivate", PlayerActivationAPI.OnPlayerActivateValidator)
 
-return PlayerActivationApi
+tes3mp.LogMessage(enumerations.log.INFO, "PlayerActivationAPI is ready.")
+
+return PlayerActivationAPI
