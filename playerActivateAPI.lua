@@ -1,11 +1,16 @@
 --[[
-  This is a module that just adds some simple helpers for player to player activation
-  Activation should always pop up a menu for custom options
+
+Adds an event when you activate a player called `OnPlayerActivate(pid, otherpid, menu, cellDescription)`  
+
+| argument        | description                                           |
+| --------------- | ----------------------------------------------------- |
+| pid             | The player id of the **activating** player            |
+| otherpid        | The player id of the **activated** player             |
+| menu            | A table that will be passed to menuHelper.DisplayMenu |
+| cellDescription | The cell description of the **activated** player      |
+
 ]] --
--- onPlayerActivated
---[[function logd(msg)
-  tes3mp.LogMessage(enumerations.log.INFO,msg)
-end]] --
+
 
 PlayerActivationApi = {}
 PlayerActivationApi.config = {}
@@ -53,13 +58,6 @@ function PlayerActivationApi.OnPlayerActivateValidator(eventStatus, activatingPl
         false or Players[activatedPlayer]:IsLoggedIn() == false or LoadedCells[cellDescription] == nil) then
         return customEventHooks.makeEventStatus(false, false)
     end
-end
-
-function PlayerActivationApi.enableMenu()
-    PlayerActivationApi.config.showMenuOnActivate = true
-end
-function PlayerActivationApi.disableMenu()
-    PlayerActivationApi.config.showMenuOnActivate = false
 end
 
 customEventHooks.registerValidator("OnPlayerActivate", PlayerActivationApi.OnPlayerActivateValidator)
