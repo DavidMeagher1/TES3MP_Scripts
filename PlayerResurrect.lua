@@ -66,7 +66,7 @@ local function OnPlayerDeathHandler(eventStatus, pid)
     if eventStatus.validCustomHandlers and hasPartySystem() and PartySystem.getPartyId(pid) then
         local player = Players[pid]
         tes3mp.StopTimer(player.resurrectTimerId)
-        player.resurrectTimerId = tes3mp.CreateTimerEx("OnDeathTimeExpiration",time.seconds(PlayerResurrect.config.deathTime), "i", self.pid)
+        player.resurrectTimerId = tes3mp.CreateTimerEx("OnDeathTimeExpiration",time.seconds(PlayerResurrect.config.deathTime), "i", pid)
         tes3mp.StartTimer(player.resurrectTimerId)
     end
 end
@@ -76,7 +76,7 @@ local function OnPartyDeath(eventStatus, partyId)
         for _, member in PartySystem.getMembers(partyId) do
             local player = logicHandler.GetPlayerByName(member)
             tes3mp.StopTimer(player.resurrectTimerId)
-            player.resurrectTimerId = tes3mp.CreateTimerEx("OnDeathTimeExpiration",time.seconds(PlayerResurrect.config.partyDeathTimer), "i", self.pid)
+            player.resurrectTimerId = tes3mp.CreateTimerEx("OnDeathTimeExpiration",time.seconds(PlayerResurrect.config.partyDeathTimer), "i", player.pid)
             tes3mp.StartTimer(player.resurrectTimerId)
         end
         PartySystem.messageParty(partyId, "Everyone has died.")
