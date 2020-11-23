@@ -1,7 +1,6 @@
 PlayerResurrect = {}
 PlayerResurrect.scriptName = "PlayerResurrect"
 PlayerResurrect.defaultConfig = {
-    deathTime = config.deathTime,
     partyDeathTimer = 3,
     healthMultiplier = 0.1
 }
@@ -39,7 +38,7 @@ local function OnPlayerActivateHandler(eventStatus, pid, otherpid, menu, cellDes
         if Players[otherpid] ~= nil and Players[otherpid]:IsLoggedIn() then
             local health = tes3mp.GetHealthCurrent(otherpid)
             local maxHealth = tes3mp.GetHealthBase(otherpid)
-            
+
             -- Make sure player is dead
             local canHeal = health < 1
 
@@ -52,40 +51,34 @@ local function OnPlayerActivateHandler(eventStatus, pid, otherpid, menu, cellDes
             if canHeal then
                 -- Here is where I can look to see if you share a party
                 tes3mp.StopTimer(Players[otherpid].resurrectTimerId)
-                
+
                 tes3mp.Resurrect(otherpid, enumerations.resurrect.REGULAR)
                 tes3mp.SetHealthCurrent(otherpid, maxHealth * PlayerResurrect.config.healthMultiplier)
                 tes3mp.SendStatsDynamic(otherpid)
-                
+
             end
         end
     end
 end
 
-local function OnPlayerDeathHandler(eventStatus, pid)
-    if eventStatus.validCustomHandlers and hasPartySystem() and PartySystem.getPartyId(pid) then
-        local player = Players[pid]
-        tes3mp.StopTimer(player.resurrectTimerId)
-        player.resurrectTimerId = tes3mp.CreateTimerEx("OnDeathTimeExpiration",time.seconds(PlayerResurrect.config.deathTime), "i", pid)
-        tes3mp.StartTimer(player.resurrectTimerId)
-    end
-end
-
 local function OnPartyDeath(eventStatus, partyId)
-    if eventStatus.validCustomHandlers then
+    if eventStatus.validCustomHandlers and config.playersRespawn then
         for _, member in PartySystem.getMembers(partyId) do
             local player = logicHandler.GetPlayerByName(member)
-            tes3mp.StopTimer(player.resurrectTimerId)
-            player.resurrectTimerId = tes3mp.CreateTimerEx("OnDeathTimeExpiration",time.seconds(PlayerResurrect.config.partyDeathTimer), "i", player.pid)
-            tes3mp.StartTimer(player.resurrectTimerId)
+            if player:IsLoggedIn() then
+                if player.resurrectTimerId then
+                    tes3mp.StopTimer(player.resurrectTimerId)
+                end
+                player.resurrectTimerId = tes3mp.CreateTimerEx("OnDeathTimeExpiration",
+                                              time.seconds(PlayerResurrect.config.partyDeathTimer), "i", player.pid)
+                tes3mp.StartTimer(player.resurrectTimerId)
+            end
         end
-        PartySystem.messageParty(partyId, "Everyone has died.")
     end
 end
 
 customEventHooks.registerValidator("OnPlayerActivate", OnPlayerActivateValidator)
 customEventHooks.registerHandler("OnPlayerActivate", OnPlayerActivateHandler)
-customEventHooks.registerHandler("OnPlayerDeath", OnPlayerDeathHandler)
 customEventHooks.registerHandler("OnPartyDeath", OnPartyDeath)
 
 tes3mp.LogMessage(enumerations.log.INFO, "PlayerResurrect is ready.")
